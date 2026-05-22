@@ -1,0 +1,66 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'ADMIN';
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+    }
+
+    match /sows/{documentId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    match /events/{documentId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    match /tasks/{documentId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    match /pig_sales/{documentId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    match /maintenance_requests/{documentId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    match /news_posts/{documentId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    match /chat_rooms/{documentId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    match /chat_messages/{documentId} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Payroll Operations (Admin Only)
+    match /employee_transactions/{documentId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /employee_salaries/{documentId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
+

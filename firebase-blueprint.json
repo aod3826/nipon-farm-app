@@ -1,0 +1,235 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Information about a registered user",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["ADMIN", "STAFF"] },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["uid", "email", "displayName", "role", "createdAt"]
+    },
+    "Sow": {
+      "title": "Sow",
+      "description": "แม่หมู",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "sowId": { "type": "string" },
+        "breed": { "type": "string" },
+        "type": { "type": "string", "enum": ["SOW", "BOAR"] },
+        "birthDate": { "type": "string" },
+        "entryDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["IDLE", "MATED", "PREGNANT", "LACTATING", "RECOVERY", "CULLED"] },
+        "parity": { "type": "number" },
+        "penId": { "type": "string" },
+        "recordedBy": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["userId", "sowId", "status", "parity", "createdAt", "updatedAt"]
+    },
+    "SowEvent": {
+      "title": "Sow Event",
+      "description": "ประวัติกิจกรรมแม่หมู",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "sowId": { "type": "string" },
+        "type": { "type": "string", "enum": ["BREED", "ULTRASOUND", "FARROW", "WEAN", "HEALTH", "CULL", "HEAT_RETURN"] },
+        "date": { "type": "string" },
+        "parity": { "type": "number" },
+        "details": { "type": "object" },
+        "recordedBy": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "sowId", "type", "date", "parity", "createdAt"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "งานที่ต้องทำ",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "sowId": { "type": "string" },
+        "sowDisplayId": { "type": "string" },
+        "type": { "type": "string", "enum": ["HEAT_CHECK", "ULTRASOUND", "MOVE_TO_FARROW", "FARROW", "WEAN", "BREED"] },
+        "dueDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "COMPLETED", "CANCELLED"] },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "sowId", "sowDisplayId", "type", "dueDate", "status", "createdAt"]
+    },
+    "EmployeeTransaction": {
+      "title": "Employee Transaction",
+      "description": "การเบิกเงินล่วงหน้าหรือจ่ายเงินพนักงาน",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "employeeName": { "type": "string" },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["advance", "payment"] },
+        "date": { "type": "string" },
+        "signature": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "employeeName", "amount", "type", "date", "createdAt"]
+    },
+    "EmployeeBaseSalary": {
+      "title": "Employee Base Salary",
+      "description": "ฐานเงินเดือนพนักงาน",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "employeeName": { "type": "string" },
+        "amount": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["userId", "employeeName", "amount", "updatedAt"]
+    },
+    "PigSale": {
+      "title": "Pig Sale",
+      "description": "รายการขายหมู",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "recordedBy": { "type": "string" },
+        "date": { "type": "string" },
+        "saleId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "buyerEmail": { "type": "string" },
+        "vehicleReg": { "type": "string" },
+        "saleType": { "type": "string" },
+        "paymentStatus": { "type": "string", "enum": ["PAID", "UNPAID"] },
+        "totalPigs": { "type": "number" },
+        "pricePerKg": { "type": "number" },
+        "deductions": { "type": "number" },
+        "totalNetWeight": { "type": "number" },
+        "averageWeight": { "type": "number" },
+        "grossTotal": { "type": "number" },
+        "netTotal": { "type": "number" },
+        "signature": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "date", "saleId", "buyerName", "paymentStatus", "totalPigs", "pricePerKg", "totalNetWeight", "netTotal", "createdAt"]
+    },
+    "NewsPost": {
+      "title": "News Post",
+      "description": "โพสต์ข่าวสารในฟาร์ม",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorPhotoUrl": { "type": "string" },
+        "content": { "type": "string" },
+        "imageUrls": { "type": "array" },
+        "videoUrl": { "type": "string" },
+        "audioUrl": { "type": "string" },
+        "likedBy": { "type": "array" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "authorName", "content", "createdAt"]
+    },
+    "ChatRoom": {
+      "title": "Chat Room",
+      "description": "ห้องสนทนา",
+      "type": "object",
+      "properties": {
+        "isGroup": { "type": "boolean" },
+        "name": { "type": "string" },
+        "participants": { "type": "array" },
+        "participantNames": { "type": "object" },
+        "lastMessage": { "type": "string" },
+        "lastMessageTime": { "type": "number" },
+        "lastMessageSenderId": { "type": "string" },
+        "unreadCount": { "type": "object" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["participants", "participantNames", "createdAt", "updatedAt"]
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "ข้อความในห้องสนทนา",
+      "type": "object",
+      "properties": {
+        "roomId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "content": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["roomId", "senderId", "senderName", "content", "read", "createdAt"]
+    },
+    "MaintenanceRequest": {
+      "title": "Maintenance Request",
+      "description": "ใบแจ้งซ่อมอุปกรณ์ชำรุด",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "location": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "IN_PROGRESS", "RESOLVED"] },
+        "urgency": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+        "reportedBy": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "resolvedAt": { "type": "number" }
+      },
+      "required": ["userId", "title", "description", "location", "status", "urgency", "reportedBy", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles"
+    },
+    "/sows/{documentId}": {
+      "schema": { "$ref": "#/entities/Sow" },
+      "description": "Collection of sows"
+    },
+    "/events/{documentId}": {
+      "schema": { "$ref": "#/entities/SowEvent" },
+      "description": "Collection of events"
+    },
+    "/tasks/{documentId}": {
+      "schema": { "$ref": "#/entities/Task" },
+      "description": "Collection of tasks"
+    },
+    "/pig_sales/{documentId}": {
+      "schema": { "$ref": "#/entities/PigSale" },
+      "description": "Collection of pig sales"
+    },
+    "/maintenance_requests/{documentId}": {
+      "schema": { "$ref": "#/entities/MaintenanceRequest" },
+      "description": "Collection of maintenance requests"
+    },
+    "/news_posts/{documentId}": {
+      "schema": { "$ref": "#/entities/NewsPost" },
+      "description": "Collection of news posts"
+    },
+    "/chat_rooms/{documentId}": {
+      "schema": { "$ref": "#/entities/ChatRoom" },
+      "description": "Collection of chat rooms"
+    },
+    "/chat_messages/{documentId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Collection of chat messages"
+    },
+    "/employee_transactions/{documentId}": {
+      "schema": { "$ref": "#/entities/EmployeeTransaction" },
+      "description": "Collection of employee advances and payments"
+    },
+    "/employee_salaries/{documentId}": {
+      "schema": { "$ref": "#/entities/EmployeeBaseSalary" },
+      "description": "Collection of employee base salaries"
+    }
+  }
+}
+
